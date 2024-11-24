@@ -1,6 +1,6 @@
 FROM adoptopenjdk/openjdk11:latest
 
-EXPOSE 8082
+EXPOSE 8080
 
 WORKDIR /app
 

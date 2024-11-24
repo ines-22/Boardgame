@@ -1,0 +1,40 @@
+---
+- name: Deploy BoardGame Application
+  hosts: all
+  become: true
+  tasks:
+    - name: Check if the container is running
+      shell: docker ps --filter "name=BoardGame"
+      register: running_container
+
+    - name: Stop the running container (if exists)
+      shell: docker stop BoardGame
+      when: running_container.stdout != ""
+      ignore_errors: true
+
+    - name: Remove the stopped container (if exists)
+      shell: docker rm BoardGame
+      when: running_container.stdout != ""
+      ignore_errors: true
+
+    - name: Remove the existing Docker image
+      shell: docker rmi -f ines222/boardgame:latest
+      ignore_errors: true
+
+    - name: Pull the latest Docker image
+      shell: docker pull ines222/boardgame:latest
+
+    - name: Create a directory for the volume on the host
+      file:
+        path: /home/ines/boardgame
+        state: directory
+        mode: '0755'
+
+    - name: Create and run a new container with volume
+      shell: |
+        docker run -d \
+        --name BoardGame \
+        -p 8082:8082 \
+        -v /home/ines/boardgame:/app/data \
+        ines222/boardgame:latest
+

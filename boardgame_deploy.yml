@@ -34,7 +34,7 @@
       shell: |
         docker run -d \
         --name BoardGame \
-        -p 8080:8080 \
+        -p 8081:8080 \
         -v /home/ines/boardgame:/app/data \
         ines222/boardgame:latest
 

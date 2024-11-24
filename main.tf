@@ -19,8 +19,8 @@ resource "docker_container" "jenkins" {
   name  = "jenkins-server"
   image = docker_image.jenkins.latest
   ports {
-    internal = 8080  
-    external = 8080  
+    internal = 8082  
+    external = 8082  
   }
   ports {
     internal = 50000  

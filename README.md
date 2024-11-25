@@ -2,6 +2,8 @@
 
 This project implements a comprehensive CI/CD pipeline using Jenkins to automate the build, test, analysis, packaging, and deployment of the `BoardGame` application. Below is a step-by-step explanation of the pipeline stages and their roles.
 
+![Pipeline CI-CD img](Pipeline CI-CD.png)
+
 ## Pipeline Steps
 
 ### 1. **Git Checkout**

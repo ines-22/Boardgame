@@ -1,53 +1,61 @@
-# BoardgameListingWebApp
+# CI/CD Pipeline for BoardGame Project
 
-## Description
+This project implements a comprehensive CI/CD pipeline using Jenkins to automate the build, test, analysis, packaging, and deployment of the `BoardGame` application. Below is a step-by-step explanation of the pipeline stages and their roles.
 
-**Board Game Database Full-Stack Web Application.**
-This web application displays lists of board games and their reviews. While anyone can view the board game lists and reviews, they are required to log in to add/ edit the board games and their reviews. The 'users' have the authority to add board games to the list and add reviews, and the 'managers' have the authority to edit/ delete the reviews on top of the authorities of users.  
+## Pipeline Steps
 
-## Technologies
+### 1. **Git Checkout**
+   - Fetches the latest code from the `main` branch of the Git repository.
+   - Ensures the pipeline starts with the most up-to-date source code.
 
-- Java
-- Spring Boot
-- Amazon Web Services(AWS) EC2
-- Thymeleaf
-- Thymeleaf Fragments
-- HTML5
-- CSS
-- JavaScript
-- Spring MVC
-- JDBC
-- H2 Database Engine (In-memory)
-- JUnit test framework
-- Spring Security
-- Twitter Bootstrap
-- Maven
+### 2. **Compile**
+   - Compiles the Java application using Maven.
+   - Verifies that the source code is free of syntax errors and ready for testing.
 
-## Features
+### 3. **Test**
+   - Executes unit tests using Maven to ensure the functionality and reliability of the code.
 
-- Full-Stack Application
-- UI components created with Thymeleaf and styled with Twitter Bootstrap
-- Authentication and authorization using Spring Security
-  - Authentication by allowing the users to authenticate with a username and password
-  - Authorization by granting different permissions based on the roles (non-members, users, and managers)
-- Different roles (non-members, users, and managers) with varying levels of permissions
-  - Non-members only can see the boardgame lists and reviews
-  - Users can add board games and write reviews
-  - Managers can edit and delete the reviews
-- Deployed the application on AWS EC2
-- JUnit test framework for unit testing
-- Spring MVC best practices to segregate views, controllers, and database packages
-- JDBC for database connectivity and interaction
-- CRUD (Create, Read, Update, Delete) operations for managing data in the database
-- Schema.sql file to customize the schema and input initial data
-- Thymeleaf Fragments to reduce redundancy of repeating HTML elements (head, footer, navigation)
+### 4. **File System Scan**
+   - Scans the file system for security vulnerabilities using Trivy.
+   - Generates a detailed vulnerability report in HTML format.
 
-## How to Run
+### 5. **SonarQube Analysis**
+   - Conducts static code analysis to identify bugs, code smells, and vulnerabilities.
+   - Enforces coding standards and ensures maintainable code.
 
-1. Clone the repository
-2. Open the project in your IDE of choice
-3. Run the application
-4. To use initial user data, use the following credentials.
-  - username: bugs    |     password: bunny (user role)
-  - username: daffy   |     password: duck  (manager role)
-5. You can also sign-up as a new user and customize your role to play with the application! 😊
+### 6. **Build**
+   - Packages the application into a deployable artifact (e.g., JAR file) using Maven.
+
+### 7. **Publish to Nexus**
+   - Uploads the build artifact to a Nexus repository for version management and sharing.
+
+### 8. **Build & Tag Docker Image**
+   - Creates a Docker image for the application and tags it with `latest`.
+
+### 9. **Docker Image Scan**
+   - Scans the Docker image with Trivy to detect vulnerabilities and generates a security report.
+
+### 10. **Push Docker Image**
+   - Pushes the Docker image to a container registry (Docker Hub) for deployment.
+
+### 11. **Deploy with Ansible**
+   - Deploys the application to the target environment using an Ansible playbook.
+   - Ensures a reliable and automated deployment process.
+
+## Infrastructure
+- Jenkins, SonarQube, and Nexus are containerized and provisioned using Terraform, adhering to infrastructure-as-code (IaC) principles for scalability and consistency.
+
+## Notifications
+- After each pipeline run, a notification email is sent to inform the user of the build status and provide a link to the build logs.
+
+## Technologies Used
+- **Jenkins**: CI/CD automation.
+- **Maven**: Build and dependency management.
+- **Trivy**: Vulnerability scanning.
+- **SonarQube**: Code quality and security analysis.
+- **Docker**: Containerization.
+- **Nexus**: Artifact repository management.
+- **Ansible**: Deployment automation.
+- **Terraform**: Infrastructure provisioning.
+
+---
